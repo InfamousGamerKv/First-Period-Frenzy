@@ -1,86 +1,93 @@
-# ✏️ Replace EVERYTHING in this file with your own game from OnlineGDB.
-#    (Click the pencil icon, select all, paste, then Commit changes.)
-
 """
-Bodega Run - a state machine demo
-
-Mr. Cruz has $5 and a craving. Get him to the bodega.
-Watch the [STATE] line: every turn the program checks what state
-he's in FIRST, and that decides what can happen next.
+First Period Frenzy
+You have to get to class before the bell rings!
+Your choices affect your time and your chances of success.
 """
-import random
 
-ROUTE = [
-    {"type": "og", "name": "OG Papo", "where": "on his milk crate by the laundromat",
-     "says": "Back in '89 this block had a payphone that WORKED. Respect the payphone."},
-    {"type": "bandit", "name": "Sticky Fingers Stevie", "where": "lurking by the scaffolding",
-     "toll": 2},
-    {"type": "og", "name": "Ms. Gladys", "where": "watching the whole block from her window",
-     "says": "Mijo, fix your collar. And tell those kids to do their homework."},
-    {"type": "bandit", "name": "Two-Dollar Tony", "where": "posted up by the ATM that's always broken",
-     "toll": 3},  # inflation hit Tony too
-]
+state = "waking_up"
+time_left = 10
+energy = 3
 
+print("Your alarm goes off! You have 10 minutes to get to first period.")
 
-def ask(prompt, options):
-    while True:
-        choice = input(prompt).strip().lower()
-        if choice in options:
-            return choice
-        print(f"  Pick one of: {', '.join(options)}")
+while state not in ("in_class", "late"):
+    print(f"\n[STATE: {state.upper()} | Time left: {time_left} min | Energy: {energy}]")
 
+    if state == "waking_up":
+        choice = input("Do you (g)et up immediately or (s)nooze? ").lower()
 
-state = "walking"   # walking | og | bandit | bodega | broke
-money = 5
-respect = 0         # how many OGs you showed love to
-stop = 0            # how far along the route you are
-who = None          # who you're dealing with right now
+        if choice == "g":
+            print("You jump out of bed and get ready!")
+            time_left -= 2
+            state = "getting_ready"
+        elif choice == "s":
+            print("You snooze and almost fall back asleep!")
+            time_left -= 5
+            energy += 1
+            state = "getting_ready"
+        else:
+            print("Choose g or s.")
 
-print("Mr. Cruz leaves the house with $5. Destination: the bodega.")
+    elif state == "getting_ready":
+        choice = input("Do you (e)at breakfast or (s)kip it? ").lower()
 
-while state not in ("bodega", "broke"):
-    print(f"\n[STATE: {state.upper()} | ${money} | respect: {respect}]")
+        if choice == "e":
+            print("You eat quickly and feel more energized.")
+            energy += 1
+            time_left -= 3
+        elif choice == "s":
+            print("You skip breakfast and rush out.")
+            time_left -= 1
+        else:
+            print("Choose e or s.")
 
-    if state == "walking":
-        if stop == len(ROUTE):
-            state = "bodega"
+        if time_left <= 0:
+            state = "late"
+        else:
+            state = "traveling"
+
+    elif state == "traveling":
+        choice = input("Do you (r)un to school or (w)alk normally? ").lower()
+
+        if choice == "r":
+            print("You run as fast as you can!")
+            time_left -= 3
+            energy -= 1
+        elif choice == "w":
+            print("You walk at a normal pace.")
+            time_left -= 5
+        else:
+            print("Choose r or w.")
             continue
-        who = ROUTE[stop]
-        stop += 1
-        print(f"You spot {who['name']} {who['where']}.")
-        state = who["type"]  # someone shows up -> switch state
 
-    elif state == "og":
-        if ask(f"(t)alk to {who['name']} or (n)od and keep it moving? ", ["t", "n"]) == "t":
-            print(f"{who['name']}: \"{who['says']}\"")
-            respect += 1
-            print("  +1 respect. Word gets around.")
+        if time_left <= 0:
+            state = "late"
+        elif energy >= 3:
+            print("Your energy helps you get to school in time!")
+            state = "in_class"
         else:
-            print(f"{who['name']} squints at you. Noted.")
-        state = "walking"
+            print("You are exhausted and have to hurry the rest of the way.")
+            state = "last_dash"
 
-    elif state == "bandit":
-        if respect > 0:  # SAME bandit, different outcome -- because of state
-            print(f"{who['name']} sees the OGs nod at you. \"Oh my bad, Mr. Cruz. Have a blessed day.\"")
-        else:
-            print(f"{who['name']}: \"Ayo teach, lemme hold ${who['toll']}.\"")
-            if ask("(r)un or (p)ay the toll? ", ["r", "p"]) == "r":
-                if random.random() < 0.5:
-                    print("You hit him with the teacher speed-walk. Escaped!")
-                else:
-                    print(f"You trip over a MetroCard. He gets ${who['toll']} anyway.")
-                    money -= who["toll"]
+    elif state == "last_dash":
+        choice = input("The bell is about to ring! Do you (s)print or (w)alk? ").lower()
+
+        if choice == "s":
+            print("You make one final sprint into class!")
+            time_left -= 1
+            if time_left > 0:
+                state = "in_class"
             else:
-                print(f"You hand over ${who['toll']}. At least he said thank you.")
-                money -= who["toll"]
-        state = "broke" if money <= 0 else "walking"
+                state = "late"
+        elif choice == "w":
+            print("You walk slowly and arrive after the bell.")
+            state = "late"
+        else:
+            print("Choose s or w.")
 
-print(f"\n[STATE: {state.upper()} | ${money}]")
-if state == "broke":
-    print("Mr. Cruz is broke before he reaches the door. The bodega cat stares in disappointment.")
-elif money == 5:
-    print("Full $5 intact. Chopped cheese AND an Arizona. Legendary run.")
-elif money >= 3:
-    print(f"Made it with ${money}. Chopped cheese secured. Minor losses.")
+print(f"\n[STATE: {state.upper()} | Time left: {time_left} | Energy: {energy}]")
+
+if state == "in_class":
+    print("You made it to first period on time! Your teacher gives you a nod.")
 else:
-    print(f"Made it with ${money}. One quarter water and your dignity. Barely.")
+    print("You arrived late. Your teacher asks why you weren't on time.")
