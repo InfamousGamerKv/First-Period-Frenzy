@@ -2,7 +2,7 @@
 
 <!-- ✏️ Replace everything in this file with YOUR game's info. Keep the headings. -->
 
-**Play it:** https://YOUR-USERNAME.github.io/INFAMOUSGAMERKV/
+**Play it:** https://INFAMOUSGAMERKV.github.io/FIRST-PERIOD-FRENZY/
 
 **Made by:** Kvon Murray
 
