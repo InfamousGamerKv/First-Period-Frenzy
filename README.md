@@ -1,4 +1,4 @@
-# Bodega Run
+# First Period Frenzy
 
 <!-- ✏️ Replace everything in this file with YOUR game's info. Keep the headings. -->
 
