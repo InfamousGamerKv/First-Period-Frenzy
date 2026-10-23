@@ -2,22 +2,23 @@
 
 <!-- ✏️ Replace everything in this file with YOUR game's info. Keep the headings. -->
 
-**Play it:** https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/
+**Play it:** https://YOUR-USERNAME.github.io/INFAMOUSGAMERKV/
 
-**Made by:** Mr. Cruz
+**Made by:** Kvon Murray
 
 ## The game
-Mr. Cruz has $5 and a craving. Get him to the bodega without getting robbed on the way.
+Can you make it to first period before the bell rings? Every choice counts, so race against the clock, manage your energy, and see if you arrive on time or end up late!
 
 ## States
-- `walking` (start): heading down the block
-- `og`: talking to an OG
-- `bandit`: someone wants your money
-- `bodega` (end): made it
-- `broke` (end): out of money
+- `waking_up` (start): your alarm goes off and you decide whether to get up or snooze
+- `getting_ready`: getting ready for school and choosing whether to eat breakfast
+- `traveling`: heading to school by running or walking
+- `last_dash`: making one final effort to reach class before the bell rings
+- `in_class` (end): made it to first period on time
+- `late` (end): arrived after the bell rang
 
 ## AI use
-None. <!-- If you used AI (ChatGPT, Claude, Gemini, Copilot…), say which one and what you used it for. -->
+ChatGPT - Used for ideas of states. <!-- If you used AI (ChatGPT, Claude, Gemini, Copilot…), say which one and what you used it for. -->
 
 ---
 **What's in here:** `game.py` is the game. `index.html` is the web page that runs it. `mini-coi.js` is what lets `input()` work on GitHub Pages, so don't delete or rename it.
